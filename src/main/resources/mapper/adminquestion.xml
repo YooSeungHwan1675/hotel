@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.dao.adminQuestionDAO">
+
+<!-- 메인 글의갯수를 얻어온다. -->
+	<select id="adminquestioncount"	parameterType="com.spring.dto.adminQuestionDTO" resultType="int">
+		<![CDATA[
+		select count(*) from tb_question where 1=1
+		]]>
+		<if test='type == "예약"'>
+     		 AND type = #{type}
+  		 </if>	
+		<if test='type == "불만"'>
+     		 AND type = #{type}
+  		 </if>	
+		<if test='type == "기타"'>
+     		 AND type = #{type}
+  		 </if>	
+		<if test="title != null">
+			<![CDATA[ and title like concat('%',#{title},'%') ]]>
+		</if>
+		<if test="userid != null">
+			<![CDATA[ and userid like concat('%',#{userid},'%') ]]>
+		</if>
+		
+		<if test='answer == "미확인"'>
+     		 AND answer = #{answer}
+  		 </if>		
+		<if test='answer == "처리중"'>
+     		 AND answer = #{answer}
+  		 </if>		
+		<if test='answer == "답변완료"'>
+     		 AND answer = #{answer}
+  		 </if>		
+	</select>
+
+<select id="adminquestionlist" parameterType="java.util.HashMap" resultType="com.spring.dto.adminQuestionDTO">
+		<![CDATA[
+		select A.*, B.name, B.phone, concat(B.email1, '@', B.email2) email from tb_question A
+		join tb_member B on A.userid=B.id 
+		where 1=1
+		]]>
+		
+		<if test='type != null and type != "ALL"'>
+			<![CDATA[ AND type = #{type} ]]>
+		</if>
+		
+		<if test="title != null">
+			<![CDATA[ and title like concat('%',#{title},'%') ]]>
+		</if>
+		
+		<if test="userid != null">
+			<![CDATA[ and userid like concat('%',#{userid},'%') ]]>
+		</if>
+
+		<if test='answer != null and answer != "ALL"'>
+			<![CDATA[ AND answer = #{answer} ]]>
+		</if>
+
+		<![CDATA[order by idx desc limit #{currentPage}, 10]]>
+	</select>
+
+
+<delete id="deleteQuestion" parameterType="java.util.ArrayList">
+		DELETE FROM tb_question where idx in
+		<foreach collection="array" item="item" index="index"
+			separator="," open="(" close=")">
+			#{item}
+		</foreach>
+</delete>
+
+	<select id="getquestion" parameterType="int"
+		resultType="com.spring.dto.adminQuestionDTO">
+		<![CDATA[
+		select A.*, B.name, B.phone, concat(B.email1, '@', B.email2) email from tb_question A
+		join tb_member B on A.userid=B.id  
+		where A.idx = #{idx}
+		]]>
+	</select>
+	
+	<update id="updatequestion" parameterType="com.spring.dto.adminQuestionDTO">
+		update tb_question set userid=#{userid}, title=#{title}, contents=#{contents}, answer=#{answer}, updatedate=#{updatedate} where idx=#{idx}
+	</update>
+
+</mapper>

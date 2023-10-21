@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.dao.UserReservationDAO">
+
+<!-- 추가된 내용 -->
+ <insert id="userreservationInsert" parameterType="com.spring.dto.UserReservationDTO">
+    INSERT INTO tb_reservation (room_choice, start_date, end_date, countpeople, member_id) 
+    VALUES (#{roomChoice},#{startDate}, #{endDate}, #{countPeople}, #{memberId})
+</insert> 
+
+
+</mapper>

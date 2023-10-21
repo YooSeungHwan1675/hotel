@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.dao.reservationDAO">
+
+		<!-- 메인 글의갯수를 얻어온다. -->
+		<select id="reservationCount" parameterType="com.spring.dto.memberDTO" resultType="int">
+		<![CDATA[
+		select count(*) from tb_reservation where 1=1
+		]]>
+		<if test="room_choice != null">
+			<![CDATA[ and room_choice like concat('%',#{room_choice},'%') ]]>
+		</if>
+				
+		<if test="member_id != null">
+			<![CDATA[ and member_id like concat('%',#{member_id},'%') ]]>
+		</if>
+		<if test='reservation_status != null and reservation_status != "ALL"'>
+			<![CDATA[ and reservation_status=#{reservation_status} ]]>
+		</if>
+	</select>
+
+   <!-- 1페이지 분량의 메인글을 얻어온다. -->
+	<select id="reservationList" parameterType="java.util.HashMap" resultType="com.spring.dto.reservationDTO">
+		<![CDATA[
+		select * from tb_reservation where 1=1
+		]]>
+
+		<if test="room_choice != null">
+			<![CDATA[ and room_choice like concat('%',#{room_choice},'%') ]]>
+		</if>
+				
+		<if test="member_id != null">
+			<![CDATA[ and member_id like concat('%',#{member_id},'%') ]]>
+		</if>
+		<if test='reservation_status != null and reservation_status != "ALL"'>
+			<![CDATA[ and reservation_status=#{reservation_status} ]]>
+		</if>
+		
+		<![CDATA[order by idx desc limit #{currentPage}, 10]]>
+	</select>
+<!--
+	   전체 메인글 개수를 얻어온다.
+   <select id="selectCount" resultType="int">
+      select count(*) from 
+   </select> 
+   -->
+   
+   <!-- 추가하기 -->
+ 	<insert id="reservationInsert" parameterType="com.spring.dto.reservationDTO">
+		INSERT INTO tb_reservation ( room_choice, start_date, end_date, member_id, countpeople)
+			VALUES ( #{room_choice}, #{start_date}, #{end_date}, #{member_id}, #{countpeople})
+	</insert>
+	
+   
+	
+	
+
+<!-- 삭제하기 -->
+<delete id="reservationDelete" parameterType="java.util.ArrayList">
+  	DELETE FROM tb_reservation where idx in
+  	<foreach collection="array" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach> 
+</delete>
+
+
+<!-- 정보가져오기 -->
+   <select id="getreservation" parameterType="int" resultType="com.spring.dto.reservationDTO">
+   		select * from tb_reservation where idx = #{idx}
+   </select>
+   
+   
+<!-- 수정하기 -->
+   <update id="reservationUpdate" parameterType="com.spring.dto.reservationDTO">
+   		update tb_reservation set room_choice= #{room_choice} ,start_date = #{start_date}, end_date =#{end_date}, member_id=#{member_id} , countpeople=#{countpeople}, modification_date = #{modification_date} where idx = #{idx} 
+   </update>
+   
+<!--    
+예약중예약취소 수정하기	-->
+   <update id="updateReservationStatus" parameterType="com.spring.dto.reservationDTO">
+   		update tb_reservation set reservation_status= #{reservation_status},modification_date =#{modification_date}  where idx = #{idx} 
+   </update>  
+</mapper> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

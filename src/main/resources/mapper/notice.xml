@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.dao.noticeDAO">
+
+
+   <!-- 추가하기 -->
+ 	<insert id="insertNotice" parameterType="com.spring.dto.noticeDTO">
+		INSERT INTO notice ( name, subject, context, hit)
+			VALUES ( #{name}, #{subject}, #{context}, 0)
+	</insert>
+	
+<!--
+	   전체 메인글 개수를 얻어온다.
+   <select id="selectCount" resultType="int">
+      select count(*) from notice
+   </select> 
+   -->
+   
+   
+   <!-- 1페이지 분량의 메인글을 얻어온다. -->
+	<select id="noticeList" parameterType="java.util.HashMap" resultType="com.spring.dto.noticeDTO">
+		<![CDATA[
+		select * from notice where 1=1
+		]]>
+
+		<if test="name != null">
+			<![CDATA[ and name like concat('%',#{name},'%') ]]>
+		</if>
+				
+		<if test="subject != null">
+			<![CDATA[ and subject like concat('%',#{subject},'%') ]]>
+		</if>
+		<![CDATA[order by idx desc limit #{currentPage}, 10]]>
+	</select>
+	
+	
+		<!-- 메인 글의갯수를 얻어온다. -->
+		<select id="noticeCount" parameterType="com.spring.dto.noticeDTO" resultType="int">
+		<![CDATA[
+		select count(*) from notice where 1=1
+		]]>
+		<if test="name != null">
+			<![CDATA[ and name like concat('%',#{name},'%') ]]>
+		</if>
+		
+		<if test="subject != null">
+			<![CDATA[ and subject like concat('%',#{subject},'%') ]]>
+		</if>
+	</select>
+
+<!-- 삭제하기 -->
+<delete id="deleteNotice" parameterType="java.util.ArrayList">
+  	DELETE FROM notice where idx in
+  	<foreach collection="array" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach> 
+</delete>
+
+
+<!-- 정보가져오기 -->
+   <select id="getNotice" parameterType="int" resultType="com.spring.dto.noticeDTO">
+   		select * from notice where idx = #{idx}
+   </select>
+   
+   
+<!-- 수정하기 -->
+   <update id="noticeUpdate" parameterType="com.spring.dto.noticeDTO">
+   		update notice set name= #{name} ,subject = #{subject}, context =#{context}, rewrite=#{rewrite} where idx = #{idx} 
+   </update>
+   
+   	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

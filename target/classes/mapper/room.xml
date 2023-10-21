@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.dao.roomDAO">
+
+	<!-- 1페이지 분량의 메인글을 얻어온다. -->
+	 <select id="roomList" parameterType="java.util.HashMap" resultType="com.spring.dto.roomDTO">
+		<![CDATA[
+		select * from tb_room where 1=1
+		]]>
+		<if test="roomno != null">
+			<![CDATA[ and roomno like concat('%',#{roomno},'%') ]]>
+		</if>
+		
+		<if test="type != null">
+			<![CDATA[ and type like concat('%',#{type},'%') ]]>
+		</if>
+		
+		<if test="capacity != null">
+			<![CDATA[ and capacity like concat('%',#{capacity},'%') ]]>
+		</if>
+		<if test="price != null">
+			<![CDATA[ and price like concat('%',#{price},'%') ]]>
+		</if>
+		
+		<![CDATA[order by idx desc limit #{currentPage}, 10]]>
+	</select> 
+	
+<!-- 메인 글의갯수를 얻어온다. -->
+	
+ 	<select id="roomCount" parameterType="com.spring.dto.roomDTO" resultType="int">
+
+		<![CDATA[
+		select count(*) from tb_room where 1=1
+		]]>
+		<if test="roomno != null">
+			<![CDATA[ and roomno like concat('%',#{roomno},'%') ]]>
+		</if>
+		
+		<if test="type != null">
+			<![CDATA[ and type like concat('%',#{type},'%') ]]>
+		</if>
+		
+		<if test="capacity != null">
+			<![CDATA[ and capacity like concat('%',#{capacity},'%') ]]>
+		</if>
+		<if test="price != null">
+			<![CDATA[ and price like concat('%',#{price},'%') ]]>
+		</if>
+		
+	</select>
+		
+	<select id="getroom" parameterType="com.spring.dto.roomDTO" resultType="com.spring.dto.roomDTO">
+		select * from tb_room where 1=1 
+		
+		<if test="idx != 0">
+			<![CDATA[ and idx=#{idx} ]]>
+		</if>
+		
+	</select>
+	
+	<insert id="insertroom" parameterType="com.spring.dto.roomDTO">
+		INSERT INTO tb_room
+		(roomno, type, size, capacity, price, number , regdate, updatedate)
+		VALUES(#{roomno}, #{type}, #{size}, #{capacity}, #{price}, #{number}, now(), now())
+	</insert>
+	
+	<delete id="deleteroom" parameterType="java.util.ArrayList">
+		DELETE FROM tb_room WHERE idx IN
+		<foreach collection="array" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach> 
+	</delete>
+	
+	 <update id="updateroom" parameterType="com.spring.dto.roomDTO">
+		<![CDATA[
+		UPDATE tb_room
+		SET roomno=#{roomno}, type=#{type}, size=#{size}, capacity=#{capacity}, price=#{price}, number=#{number}, 
+			updatedate=now()
+		WHERE idx=#{idx};
+		]]>
+	</update> 
+	
+<!--
+	아마 탈퇴회원?
+ 	<update id="withdrawroom" parameterType="com.spring.dto.roomDTO">
+		<![CDATA[
+		UPDATE tb_room
+		SET useYN='N', updatedate=now()
+		WHERE id=#{id};
+		]]>
+	</update> -->
+	
+	
+<!-- 	나중에 건들자. 겟로그인?
+
+	<select id="getLogin" parameterType="com.spring.dto.roomDTO" resultType="com.spring.dto.roomDTO">
+		select * from tb_room where useYN='Y' 
+		
+		<if test="id != null">
+			<![CDATA[ and id=#{id} ]]>
+		</if>
+		
+		<if test="password != null">
+			<![CDATA[ and password=#{password} ]]>
+		</if>
+	</select> -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
