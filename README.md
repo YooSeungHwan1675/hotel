@@ -19,3 +19,13 @@
 
 
 코딩은 원페이지 코딩방식을 채용했습니다.
+
+***
+협업도구로는 
+팀장인 제가 개설한 NAS 로 파일공유 및 백업을 관리했습니다.
+
+*** 
+시연 영상은 하단과 같습니다.
+youtube.com/watch?si=32XmbGgQa0ZK8FHB&v=JfW67DXhJZc&feature=youtu.be
+시연 당시 사용한 ppt 입니다.
+https://docs.google.com/presentation/d/1jydm3JSTXj5-2YzYKAQrhH9eCNwPaBFt/edit?usp=share_link&ouid=115103609737690546867&rtpof=true&sd=true
