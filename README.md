@@ -32,3 +32,12 @@ www.youtube.com/watch?si=32XmbGgQa0ZK8FHB&v=JfW67DXhJZc&feature=youtu.be
 시연 당시 사용한 ppt 입니다.
 
 https://docs.google.com/presentation/d/1jydm3JSTXj5-2YzYKAQrhH9eCNwPaBFt/edit?usp=share_link&ouid=115103609737690546867&rtpof=true&sd=true
+
+
+
+***
+사용한 API 종류는 
+ * 카카오맵 / 카카오 우편번호 
+ * 네이버로그인
+ * 결제시스템 (portOne참고)
+ 
