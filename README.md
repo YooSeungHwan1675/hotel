@@ -20,6 +20,8 @@
 
 코딩은 원페이지 코딩방식을 채용했습니다.
 
+mybaits를 이용했으며 MVC 형태로 진행한 프로젝트 입니다. 
+DB는 Mysql 을 이용하였습니다. 
 ***
 협업도구로는 
 팀장인 제가 개설한 NAS 로 파일공유 및 백업을 관리했습니다.
@@ -40,4 +42,5 @@ https://docs.google.com/presentation/d/1jydm3JSTXj5-2YzYKAQrhH9eCNwPaBFt/edit?us
  * 카카오맵 / 카카오 우편번호 
  * 네이버로그인
  * 결제시스템 (portOne참고)
- 
+
+
