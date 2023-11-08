@@ -43,4 +43,6 @@ https://docs.google.com/presentation/d/1jydm3JSTXj5-2YzYKAQrhH9eCNwPaBFt/edit?us
  * 네이버로그인
  * 결제시스템 (portOne참고)
 
+사용한 기술의 종류는 
+ bootstrap , Jquery , ajax, fetch, mybatis, Mysql, Spring Framework, websocket, javascript, css 등입니다. 
 
